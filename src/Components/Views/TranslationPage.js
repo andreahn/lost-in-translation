@@ -1,7 +1,12 @@
 import React from 'react';
+import { useUserContext } from '../../context/UserContext';
 
 const TranslationPage = () => {
-  return <div></div>;
+  const [user, setUser] = useUserContext()
+
+  return (
+    <>On translation page: {user.username} </>
+    );
 };
 
 export default TranslationPage;

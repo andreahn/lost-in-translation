@@ -1,7 +1,12 @@
 import React from 'react';
+import { useUserContext } from '../../context/UserContext';
 
 const ProfilePage = () => {
-  return <div></div>;
+  const [user, setUser] = useUserContext()
+
+  return (
+    <>On profile page: {user.username} </>
+    );
 };
 
 export default ProfilePage;
