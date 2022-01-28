@@ -3,7 +3,6 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import TranslationPage from './Components/Views/TranslationPage';
 import NotFound from "./Components/Views/NotFound";
 import StartupPage from "./Components/Views/StartupPage";
-import TranslationPage from "./Components/Views/TranslationPage";
 import ProfilePage from "./Components/Views/ProfilePage";
 
 function App() {
