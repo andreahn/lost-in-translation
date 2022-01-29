@@ -13,22 +13,14 @@ const StartupPage = () => {
     // localStorage.removeItem('storedUser')
 
     let storedUser = localStorage.getItem('storedUser')
+    // console.log("current stored: " + storedUser)
 
     if (storedUser){
       // user is logged in -> redirect to translations page
-
-      // TODO: set saved user to context
-      // setUser(JSON.parse(storedUser))
-
-      //TODO: push to translations page
-      // navigator('/translations')
-
-
-      // console.log('stored user is: ' + storedUser)
-      // console.log("current username in state is: " + user.username)
-
+      setUser(JSON.parse(storedUser))
+      navigator('/translation')
     }
-  }, []);
+  });
 
   const handleLogin = async (event) => {
     // log in if user already exists, otherwise register new user
@@ -75,8 +67,6 @@ const StartupPage = () => {
         <input type="text" onChange={handleUsernameChange} />
         <button type="submit">Login</button>
       </form>
-      <NavLink to="/translations">Translations</NavLink>
-      
     </div>
     </>
     );
