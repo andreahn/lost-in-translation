@@ -1,13 +1,15 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useUserContext } from '../../context/UserContext';
 import { apiFetchUser } from '../../api/UserAPI';
 import { useNavigate } from 'react-router-dom';
 
 const ProfilePage = () => {
   const [user, setUser] = useUserContext()
+
   const [translations, setTranslations] = useState([])
-  const [deleted, setDeleted] = useState(false)
+  const [deleted, setDeleted] = useState('')
   const [deletedOnIndex, setDeletedOnIndex] = useState(0)
+  let isInitialMount = useRef(true)
   const navigator = useNavigate()
 
 
@@ -18,83 +20,100 @@ const ProfilePage = () => {
       setUser(data[0])
       filterTranslations(data[0].translations)
 
-      const isDeleted = localStorage.getItem('isDeleted')
-      if(isDeleted) {
-        localStorage.setItem('isDeleted', true)
-        setDeleted(true)
-      }
     })
   }
 
   const filterTranslations = (arr) => {
 
-    let isDeleted = false
-    if(localStorage.getItem('isDeleted')) {
-      isDeleted = true
-    }
-  
+    let tmp = [] 
+    console.log(deleted)
 
-    let tmp = []
-    if(isDeleted === true) {
-      let startIndex = deletedOnIndex
-      if(arr.length - startIndex <= 10) {
-        for(let i = startIndex; i < arr.length; i++) {
-          tmp.push(arr[i])
-        }
-      }
-      else {
-        for(let i = arr.length % 10 ; i < arr.length; i++) {
-          tmp.push(arr[i])
-        }
-      }
-      setTranslations(tmp)
-      setDeletedOnIndex(tmp.length)
-    }
-    else {
+    if(deleted === 'false'){
       if(arr.length <= 10) {
         for(let i = 0; i < arr.length; i++) {
           tmp.push(arr[i])
         }
       }
+
       else {
-        for(let i = arr.length % 10 ; i < arr.length; i++) {
+        tmp = arr.slice(Math.max(arr.length - 10, 1))
+      }
+    }
+    else {
+
+      if((arr.length - deletedOnIndex) <= 10) {
+        console.log('aaaa is ', arr.length)
+        for(let i = deletedOnIndex; i < arr.length; i++) {
           tmp.push(arr[i])
         }
       }
-      setTranslations(tmp)
-      setDeletedOnIndex(tmp.length)
+      
+      else {
+        tmp = arr.slice(Math.max(arr.length - 10, 1))
+      }
     }
+      
+    setTranslations(tmp)
+
   }
   
   useEffect(() => {
-    let storedUser = localStorage.getItem('storedUser')
-    console.log(storedUser)
+    
+    // localStorage.setItem('isDeleted', JSON.stringify(false))
     // localStorage.removeItem('isDeleted')
+    // localStorage.removeItem('startIndex')
 
-    getUserInfo()
-  }, [])
 
-  useEffect(() => {
-    localStorage.setItem('isDeleted', true)
-    filterTranslations(user.translations)
+    if(isInitialMount) {
+      let tmp = localStorage.getItem('storedUser')
+      tmp = JSON.parse(tmp)
+      setUser(tmp)
+
+      const tmp2 = localStorage.getItem('isDeleted')
+      if(tmp2) {
+        setDeleted(tmp2)
+      }
+      else {
+        localStorage.setItem('isDeleted', JSON.stringify(false))
+        const tmp3 = localStorage.getItem('isDeleted')
+        setDeleted(tmp3)
+
+      }
+
+      const indexNum = localStorage.getItem('startIndex')
+      if(indexNum) {
+        setDeletedOnIndex(indexNum)
+      }
+      
+      getUserInfo()
+      isInitialMount = false
+
+    }
+    else {
+      filterTranslations(user.translations)
+    }
   }, [deleted])
 
 
   const logout = () => { 
     localStorage.removeItem('storedUser')
     localStorage.removeItem('isDeleted')
-    setDeleted(false)
+    setDeleted('true')
+
 
     navigator('/')
   }
   
   const deleteLog = () => {
-    setDeleted(true)
+    localStorage.setItem('isDeleted', JSON.stringify(true))
+    localStorage.setItem('startIndex', user.translations.length)
+
+
+    setDeleted('true')
   }
 
  
   return (
-    // <>On profile page: {user.username} </>
     <main>
       <div>
         <h1>Hello  { user.username }</h1>
