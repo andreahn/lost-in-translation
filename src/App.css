@@ -36,3 +36,32 @@
     transform: rotate(360deg);
   }
 }
+
+#header {
+  border-bottom: 2px solid #ffcd42;
+  text-align: left;
+  background-color: #ffc421;
+  height: 50px;
+  padding-left: 10px;
+  padding-top: 5px;
+}
+
+#header img {
+  height: 40px;
+  display: inline-block;
+}
+
+#headerUsername {
+  float: right;
+  margin: 5px;
+  padding: 8px;
+  border-radius: 10px;
+  background-color: #ffe18f;
+}
+
+#headerTitle {
+  color: #1f1f1f;
+  position: absolute;
+  padding: 10px;
+  font-size: 20px;
+}
