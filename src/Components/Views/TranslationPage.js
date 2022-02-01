@@ -27,9 +27,10 @@ const TranslationPage = () => {
   const handleTranslation = (event) => {
     event.preventDefault()
     let translationArray = translationInput.split("");
-    //console.log(translationArray.map((letter) => <img src={require(`../../assets/individial_signs/${letter}.png`)} alt={letter}/>))
-    setTranslations(translationArray.map((letter) => <img src={require(`../../assets/individial_signs/${letter}.png`)} alt={letter}/>))
-    addTranslationToUser(user.id, translations)
+    if(translationInput != 0) {
+      setTranslations(translationArray.map((letter) => <img src={require(`../../assets/individial_signs/${letter}.png`)} alt={letter}/>))
+      addTranslationToUser(user.id, translationInput)
+    }
   }
   
   // Handle input
