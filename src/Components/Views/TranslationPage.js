@@ -25,11 +25,13 @@ const TranslationPage = () => {
   // TODO: Function that translates text and store to api
   // Handle form submission
   const handleTranslation = (event) => {
+    let newTranslationsArray = user.translations
+    newTranslationsArray.push(translationInput)
     event.preventDefault()
     let translationArray = translationInput.split("");
     if(translationInput != 0) {
       setTranslations(translationArray.map((letter) => <img src={require(`../../assets/individial_signs/${letter}.png`)} alt={letter}/>))
-      addTranslationToUser(user.id, translationInput)
+      addTranslationToUser(user.id, newTranslationsArray)
     }
   }
   
@@ -38,7 +40,7 @@ const TranslationPage = () => {
     // Bind user input to variable
     translationInput = event.target.value
     // Filter input with RegEx to remove non-alphanumerical values
-    translationInput = translationInput.replace(/[^A-Za-z0-9]/gi, '').toLowerCase()
+    translationInput = translationInput.replace(/[^A-Za-z]/gi, '').toLowerCase()
   }
 
 
