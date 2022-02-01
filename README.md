@@ -1,7 +1,6 @@
 # Trivia Game in Vue.js
 
-// TODO: add heroku link<br/>
-A Translation app created with React. This project is deployed [here]().
+A sign language translation app created with React. This project is deployed [here](https://ih-an-so-react-translation.herokuapp.com/).
 
 ## Installation
 
