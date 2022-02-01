@@ -3,7 +3,8 @@ import { useUserContext } from '../../context/UserContext';
 import Header from '../Header';
 import TranslationForm from '../TranslationForm';
 import './TranslationPage.css';
-import { useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
+import { addTranslationToUser } from '../../api/UserAPI';
 
 const TranslationPage = () => {
   const [user, setUser] = useUserContext()
@@ -28,7 +29,7 @@ const TranslationPage = () => {
     let translationArray = translationInput.split("");
     //console.log(translationArray.map((letter) => <img src={require(`../../assets/individial_signs/${letter}.png`)} alt={letter}/>))
     setTranslations(translationArray.map((letter) => <img src={require(`../../assets/individial_signs/${letter}.png`)} alt={letter}/>))
-    console.log(translations);
+    addTranslationToUser(user.id, translations)
   }
   
   // Handle input
@@ -44,9 +45,15 @@ const TranslationPage = () => {
     <>
       <Header />
       <TranslationForm translationSubmitted={handleTranslation} translationChange={handleTranslationChange} />
-      <div id="translation">           
-            { translations }   
+      <div id="translation">
+            { translations }
       </div>
+      <NavLink id="profile" to="/profile">
+        <button type="button">
+          Profile
+        </button>
+        
+      </NavLink>
     </>
     );
 };
