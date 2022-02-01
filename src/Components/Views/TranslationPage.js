@@ -29,9 +29,12 @@ const TranslationPage = () => {
     newTranslationsArray.push(translationInput)
     event.preventDefault()
     let translationArray = translationInput.split("");
-    if(translationInput != 0) {
+    if(translationInput !== 0) {
       setTranslations(translationArray.map((letter) => <img src={require(`../../assets/individial_signs/${letter}.png`)} alt={letter}/>))
       addTranslationToUser(user.id, newTranslationsArray)
+      let newUser = addTranslationToUser(user.id, newTranslationsArray)
+      localStorage.setItem('storedUser', JSON.stringify(newUser))
+      setUser(newUser)
     }
   }
   
@@ -41,6 +44,12 @@ const TranslationPage = () => {
     translationInput = event.target.value
     // Filter input with RegEx to remove non-alphanumerical values
     translationInput = translationInput.replace(/[^A-Za-z]/gi, '').toLowerCase()
+  }
+
+  const logout = () => {
+    localStorage.removeItem('storedUser')
+    setUser({username: "", translations: [], id: 0})
+    navigator('/')
   }
 
 
@@ -55,7 +64,9 @@ const TranslationPage = () => {
         <button type="button">
           Profile
         </button>
-        
+        <button onClick={logout}>
+          Logout
+        </button>
       </NavLink>
     </>
     );

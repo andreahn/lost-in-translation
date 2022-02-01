@@ -20,9 +20,23 @@ const StartupPage = () => {
     // console.log("current stored: " + storedUser)
 
     if (storedUser) {
-      // user is logged in -> redirect to translations page
+      // user is logged in -> update with info from API and redirect to translations page
       setUser(JSON.parse(storedUser))
-      navigator('/translation')
+
+      apiFetchUser(JSON.parse(storedUser).username)
+        .then(response => response[1])
+        .then(data => {
+          if (JSON.stringify(data) === "[]"){
+            // user stored in local storage doesn't exist in API
+            localStorage.removeItem('storedUser')
+          }
+          else {
+            localStorage.setItem('storedUser', JSON.stringify(data[0]))
+            setUser(data[0])
+            navigator('/translation')
+          }
+          
+        })
     }
   });
 
