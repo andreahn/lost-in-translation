@@ -17,7 +17,7 @@ const TranslationPage = () => {
   useEffect(() => {
     let storedUser = localStorage.getItem('storedUser');
     
-    if(!storedUser) {
+    if(storedUser == null) {
       navigator('/')
     }
   })
