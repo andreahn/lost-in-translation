@@ -27,9 +27,9 @@ const TranslationPage = () => {
   const handleTranslation = (event) => {
     event.preventDefault()
     let translationArray = translationInput.split("");
-    for(let i = 0; i < translationArray.length; i++) {
-      
-    }
+    //console.log(translationArray.map((letter) => <img src={require(`../../assets/individial_signs/${letter}.png`)} alt={letter}/>))
+    setTranslations(translationArray.map((letter) => <img src={require(`../../assets/individial_signs/${letter}.png`)} alt={letter}/>))
+    console.log(translations);
   }
   
   // Handle input
