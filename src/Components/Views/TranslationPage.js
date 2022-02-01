@@ -3,7 +3,6 @@ import { useUserContext } from '../../context/UserContext';
 import Header from '../Header';
 import TranslationForm from '../TranslationForm';
 import './TranslationPage.css';
-import TranslationOutput from '../TranslationOutput';
 import { useNavigate } from 'react-router-dom';
 
 const TranslationPage = () => {
@@ -37,7 +36,7 @@ const TranslationPage = () => {
     // Bind user input to variable
     translationInput = event.target.value
     // Filter input with RegEx to remove non-alphanumerical values
-    translationInput = translationInput.replace(/[^A-Za-z0-9]/gi, '')
+    translationInput = translationInput.replace(/[^A-Za-z0-9]/gi, '').toLowerCase()
   }
 
 
@@ -45,7 +44,9 @@ const TranslationPage = () => {
     <>
       <Header />
       <TranslationForm translationSubmitted={handleTranslation} translationChange={handleTranslationChange} />
-      <TranslationOutput />
+      <div id="translation">           
+            { translations }   
+      </div>
     </>
     );
 };
