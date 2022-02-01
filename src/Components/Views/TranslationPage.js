@@ -32,6 +32,9 @@ const TranslationPage = () => {
     if(translationInput != 0) {
       setTranslations(translationArray.map((letter) => <img src={require(`../../assets/individial_signs/${letter}.png`)} alt={letter}/>))
       addTranslationToUser(user.id, newTranslationsArray)
+      let newUser = addTranslationToUser(user.id, newTranslationsArray)
+      localStorage.setItem('storedUser', JSON.stringify(newUser))
+      setUser(newUser)
     }
   }
   
