@@ -1,3 +1,4 @@
+import { NavLink } from "react-router-dom";
 import { useUserContext } from "../context/UserContext";
 
 const Header = () => {
@@ -9,7 +10,7 @@ const Header = () => {
             <div id="header">
                 <img src={require("../assets/Logo-Hello.png")} alt="Logo" />
                 <span id="headerTitle">Lost in Translation</span>
-                <span id="headerUsername">{user.username}</span>
+                <span id="headerUsername"><NavLink to="/profile">{user.username}</NavLink></span>
             </div>
         )
     }
