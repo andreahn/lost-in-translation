@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useUserContext } from '../../context/UserContext';
 import { apiFetchUser } from '../../api/UserAPI';
 import { useNavigate } from 'react-router-dom';
@@ -12,8 +12,42 @@ const ProfilePage = () => {
   const [isDeleted, setDeleted] = useState(false)
   const [startIndex, setStartIndex] = useState(0)
   const navigator = useNavigate()
+
   let isInitialMount = true
   const [change, setChange] = useState(0)
+
+
+  // Check if initial mount, if so => get stored userinfo from localstorage
+  // If not initial mount, but an update on isDeleted variable, render list of translation again
+  useEffect(() => {
+    let userInfo = JSON.parse(localStorage.getItem('storedUser'))
+    if(!userInfo) {
+      navigator('/')
+    }
+    else {
+      if(isInitialMount === true) {
+        // localStorage.removeItem('startIndex')
+        // localStorage.removeItem('isDeleted')
+      
+    
+    
+        getDeleted()
+        getIndex()
+        getUserInfo(userInfo.username)
+  
+        isInitialMount = false
+  
+      }
+      else {
+        getDeleted()
+        getIndex()
+        filterTranslations(userInfoApi.translations)
+  
+      }
+    }
+
+  },[change, isDeleted])
+
 
 
   // Fetch user-info from API
@@ -23,6 +57,8 @@ const ProfilePage = () => {
     .then(response => response[1])
     .then(data => {
       setUserApi(data[0])
+      filterTranslations(data[0].translations)
+
     })
   }
 
@@ -59,7 +95,7 @@ const ProfilePage = () => {
       }
     }
     
-    const test = listItems.map((listItem) => <li key={listItem}>{listItem}</li>)
+    const test = listItems.map((listItem) => <li key={Math.random(arr.length)}>{listItem}</li>)
     setTranslations(test)
   }
 
@@ -116,35 +152,7 @@ const ProfilePage = () => {
     }
   }
 
-  // Check if initial mount, if so => get stored userinfo from localstorage
-  // If not initial mount, but an update on isDeleted variable, render list of translation again
-  useEffect(() => {
-    if(isInitialMount === true) {
-      // localStorage.removeItem('startIndex')
-      // localStorage.removeItem('isDeleted')
-      let userInfo = JSON.parse(localStorage.getItem('storedUser'))
 
-      console.log(userInfo)
-      if(userInfo == null) {
-        navigator('/')
-      }
-  
-  
-      getDeleted()
-      getIndex()
-      getUserInfo(userInfo.username)
-      filterTranslations(userInfo.translations)
-
-      isInitialMount = false
-
-    }
-    else {
-      getDeleted()
-      getIndex()
-      filterTranslations(userInfoApi.translations)
-
-    }
-  },[change, isDeleted])
 
 
   return (
