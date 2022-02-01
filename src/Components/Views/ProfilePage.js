@@ -63,6 +63,10 @@ const ProfilePage = () => {
     setTranslations(test)
   }
 
+  const backToTranslation = () => {
+    navigator('/translation')
+  }
+
   // Delete logg => set deleted boolan to true, update start index to be the last item of array
   const deleteLog = () => {
     setDeleted(true)
@@ -81,6 +85,7 @@ const ProfilePage = () => {
     localStorage.removeItem('isDeleted')
     localStorage.removeItem('startIndex')
 
+    setUser({username: "", translations: [], id: 0})
     navigator('/')
   }
 
@@ -117,7 +122,12 @@ const ProfilePage = () => {
     if(isInitialMount === true) {
       // localStorage.removeItem('startIndex')
       // localStorage.removeItem('isDeleted')
-      const userInfo = JSON.parse(localStorage.getItem('storedUser'))
+      let userInfo = JSON.parse(localStorage.getItem('storedUser'))
+
+      console.log(userInfo)
+      if(userInfo == null) {
+        navigator('/')
+      }
   
   
       getDeleted()
@@ -137,8 +147,6 @@ const ProfilePage = () => {
   },[change, isDeleted])
 
 
-
-
   return (
       <main>
       <Header />
@@ -148,6 +156,8 @@ const ProfilePage = () => {
             {translations}
         </div>
         <div>
+          <button onClick={backToTranslation}>Back to translation</button>
+
           <button onClick={deleteLog}>Delete log</button>
           <button onClick={logout}>Logout</button>
         </div>
