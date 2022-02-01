@@ -1,0 +1,31 @@
+#translationForm {
+    margin: 20px;
+    text-align: center;
+}
+  
+#translationForm button {
+    margin: 5px;
+    font-size: 16px;
+    border-radius: 6px;
+    background-color: white;
+    border: 1px solid black;
+}
+  
+#translationForm input {
+    width: 250px;
+    font-size: 16px;
+}
+
+#translation {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+    grid-template-rows: auto;
+    border: 2px solid black;
+    width: fit-content;
+    margin: auto;
+}
+
+#translation img {
+    height: auto;
+    width: 4em;
+}
