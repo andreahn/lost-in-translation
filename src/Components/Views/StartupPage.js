@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
 import { apiFetchUser, createNewUser } from '../../api/UserAPI';
 import { useUserContext } from '../../context/UserContext';
 import LoginForm from '../LoginForm';
@@ -17,7 +17,6 @@ const StartupPage = () => {
     // localStorage.removeItem('storedUser')
 
     let storedUser = localStorage.getItem('storedUser')
-    // console.log("current stored: " + storedUser)
 
     if (storedUser) {
       // user is logged in -> update with info from API and redirect to translations page
@@ -26,7 +25,7 @@ const StartupPage = () => {
       apiFetchUser(JSON.parse(storedUser).username)
         .then(response => response[1])
         .then(data => {
-          if (JSON.stringify(data) === "[]"){
+          if (JSON.stringify(data) === "[]") {
             // user stored in local storage doesn't exist in API
             localStorage.removeItem('storedUser')
           }
@@ -35,10 +34,9 @@ const StartupPage = () => {
             setUser(data[0])
             navigator('/translation')
           }
-          
         })
     }
-  });
+  }, []);
 
   const handleLogin = async (event) => {
     // log in if user already exists, otherwise register new user
@@ -67,6 +65,7 @@ const StartupPage = () => {
             .then(newUser => {
               localStorage.setItem('storedUser', JSON.stringify(newUser))
               setUser(newUser)
+              navigator('/translation')
             })
         }
 
@@ -75,6 +74,7 @@ const StartupPage = () => {
 
           localStorage.setItem('storedUser', JSON.stringify(data[0]))
           setUser(data[0])
+          navigator('/translation')
         }
       })
   }
