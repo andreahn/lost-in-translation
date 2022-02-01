@@ -1,4 +1,4 @@
-# Trivia Game in Vue.js
+# Lost in Translation in React.js
 
 A sign language translation app created with React. This project is deployed [here](https://ih-an-so-react-translation.herokuapp.com/).
 
